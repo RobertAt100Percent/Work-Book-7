@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDos</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="index.html">Home</a>
+      <a href="todos.html">ToDos</a>
+    </header>
+    <main>
+      <h1>ToDos</h1>
+      <input type="number" id="input-todo-id" placeholder="Enter Todo ID" />
+      <button onclick="handleClick();">Get</button>
+      <div id="todo-details"></div>
+    </main>
+    <footer></footer>
+    <script>
+      const inputTodo = document.querySelector("#input-todo-id");
+      const button = document.querySelector("button");
+      const divDisplay = document.querySelector("#todo-details");
+      // - when button clicked
+      // - get the todo id out of the textbox on the screen
+      function handleClick() {
+        let id = inputTodo.value;
+        // - use the id to call the api to get a todo back
+        fetch("http://jsonplaceholder.typicode.com/todos/1")
+          .then((response) => response.json())
+          .then((body) => {
+            // - verify I got the data back
+            console.log(body);
+            // - display one piece of data
+            let todo = body;
+            console.log(divDisplay);
+            divDisplay.innerText = '';
+          });
+      }
+
+      // - verify it works
+
+      // - display another pieces of data
+
+      // - verify it works
+    </script>
+  </body>
+</html>
