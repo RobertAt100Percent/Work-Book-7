@@ -5,15 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+  />
 </head>
 <body>
     <main>
 
+        <!-- make a table to hold and display the data -->
         <table>
             <thead>
-                <tbody>
-
             <tr>
+                <!-- make the names for the columns -->
+                <th>
+                    id
+                </th>
                 <th>
                     name
                 </th>
@@ -42,17 +49,54 @@
                     lat
                 </th>
                 <th>
-                    lat
+                    lng
                 </th>
             </tr>
         </thead>
-    </tbody>
+        <tbody id="users-Tbody"></tbody>
 
         </table>
     </main>
 
     <script>
 
+        // use the query selector to assign the what we want to the table body. we do this by assing in the id
+        const userTbody = document.querySelectorAll("users-Tbody");
+
+        // call the api
+        fetch("https://jsonplaceholder.typicode.com/users")
+        .then((response) => response.json())
+        .then((users) => {
+            for(const user of users){
+                console.log(user)
+            }
+        });
+
+        //make a function to load the table witht the data we just imported
+        function buildTableRow(user, tbody) {
+            // this is to get the rest of the rows started but we dont put anything in here
+            let row  = tbody.insertRow(-1);
+
+            // we actually start putting datat in these rows over here, the ones below
+            let cell1 = row.insertCell(0);
+            cell1.innerText = user.id;
+
+            let cell2 = row.insertCell(1);
+            cell1.innerText = user.id; 
+            
+            let cell3 = row.insertCell(2);
+            cell1.innerText = user.id;
+
+            let cell4 = row.insertCell(3);
+            cell1.innerText = user.id;
+
+            let cell5 = row.insertCell(4);
+            cell1.innerText = user.id;
+
+            let cell6 = row.insertCell(5);
+            cell1.innerText = user.id;
+            
+        }
 
         // display the users when the page loads
 
