@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    >
+
+</head>
+<body>
+    <main>
+        <label for="cars">Choose a city:</label>
+
+        <select 
+        name="city-names"
+        id="city-names"
+        onchange="createStationURL()"
+        ></select>
+
+        <table id="citiesTbl"></table>
+
+    </main>
+    <footer></footer>
+    <script src="./JS/cities-array.js"></script>
+    <script src="./JS/custom.js"></script>
+</body>
+</html>
