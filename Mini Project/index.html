@@ -1,29 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
-    >
-
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    />
+  </head>
+  <body>
     <main>
-        <label for="cars">Choose a city:</label>
-
-        <select 
-        name="city-names"
-        id="city-names"
-        onchange="createStationURL()"
-        ></select>
-
-        <table id="citiesTbl"></table>
-
+      <h3>Weather</h3>
+      <label for="city-ddl">City</label>
+      <select id="city-ddl" onchange="handleCityChanged();"></select>
+      <table>
+        <thead>
+          <!-- <tr>
+            <th>Month</th>
+            <th>Savings</th>
+          </tr> -->
+        </thead>
+        <tbody id="forecast-table-body">
+          <!-- <tr>
+            <td>January</td>
+            <td>$100</td>
+          </tr>
+          <tr>
+            <td>February</td>
+            <td>$80</td>
+          </tr> -->
+        </tbody>
+      </table>
     </main>
-    <footer></footer>
-    <script src="./JS/cities-array.js"></script>
-    <script src="./JS/custom.js"></script>
-</body>
+
+    <script>
+        //array of cities
+      let cities = [
+        { name: "Benbrook, TX", latitude: 32.6732, longitude: -97.4606 },
+        { name: "Pittsburgh, PA", latitude: 40.436072, longitude: -79.991315 },
+        { name: "Washington, DC", latitude: 38.896241, longitude: -77.036247 },
+        { name: "Brooklyn, NY", latitude: 40.697136, longitude: -73.997422 },
+      ];
+
+      const cityDropDownList = document.querySelector("#city-ddl");
+      const forecastTableBody = document.querySelector("#forecast-table-body");
+
+      function loadCityDropDownList() {
+        let defaultOption = document.createElement("option");//create a new element
+        defaultOption.value = "";
+        defaultOption.innerText = "Select City...";//inner text of the defalut option
+        cityDropDownList.appendChild(defaultOption); //this is the defalut option
+
+        // loop through cities array and create an option for each city
+        //use city name for both the value and the text content of the option
+        for (const city of cities) {
+            let option = document.createElement("option");//new option element
+          option.value = city.name;//loop thourgh the array and display the city names
+          option.innerText = city.name;//make the inner text the same name as the property name in the object array 
+          cityDropDownList.appendChild(option);//lastly add the new option element that holds all value and name to the select tag
+          //this will loop through the whole array
+        }
+      }
+
+      //call the function
+      loadCityDropDownList();
+
+      //have craig explain this function
+      function getPoint(city) {
+        //this calls external data aka the api
+        fetch(`https://api.weather.gov/points/${city.latitude},${city.longitude}`)//this is hard coded so all the numebrs will be the same 
+          .then((response) => response.json())//this takes a response from the server in the form of a string, then JS turns this into a javascript object. this data is now being passed into the next then block
+          .then(function (point) { //this name is to refere to the point in the api where weather is being collected
+            let forecastUrl = point.properties.forecast; //these are objects nested inside each other to hold properties and we access them like any other nested object.
+            console.log(forecastUrl);//this translate the lon and lat into a url to get the forcast
+
+            fetch(forecastUrl)//this is a nest api that actuall holds all the properu=ties that we need to access the weather data. this is importnt because it is dynamic and changes every time you select a new city
+              .then((response) => response.json())
+              .then(function (forecast) {// forecastTableBody.innerHTML = "";
+                console.log(forecast.properties.periods);
+                for (const period of forecast.properties.periods) {
+                    buildTableRow(period);//we can now call build table table row to build up the and load the table with this data
+                }
+              });
+          });
+      }
+
+      //load the table by passing data in the 
+      function buildTableRow(period) {
+        console.log(period.name, period.temperature, period.detailedForecast);
+        let row = forecastTableBody.insertRow();
+
+        //period.name
+        let td1 = row.insertCell();
+        td1.innerText = period.name;
+
+        //Temperature: period.temperature F
+        let td2 = row.insertCell();
+        td2.innerText = `Temperature: ${period.temperature} F`;
+
+        // period.detailedForecast
+        let td3 = row.insertCell();
+        td3.innerText = period.detailedForecast;
+      }
+
+      function handleCityChanged() {
+        const cityName = cityDropDownList.value;//assign the city name 
+        console.log(cityName);//debug and display to the console
+        const selectedCity = cities.find(function (city) {
+          return city.name == cityName;
+        });
+
+        //debug and display to the console
+        console.log(selectedCity);
+        getPoint(selectedCity);//we are passing the selected city 
+      }
+
+    </script>
+  </body>
 </html>
