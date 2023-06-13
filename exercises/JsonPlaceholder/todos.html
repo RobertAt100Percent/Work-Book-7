@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDos</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.classless.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="index.html">Home</a>
+      <a href="todos.html">ToDos</a>
+    </header>
+    <main>
+      <h1>ToDos</h1>
+      <input
+        type="number"
+        id="input-todo-id"
+        name="input-todo-id"
+        placeholder="Enter todo"
+      />
+      <button onclick="loadTodo();">Get</button>
+      <article id="todo">
+        <h2>Article</h2>
+        <p>
+          Nullam dui arcu, malesuada et sodales eu, efficitur vitae dolor. Sed
+          ultricies dolor non ante vulputate hendrerit. Vivamus sit amet
+          suscipit sapien. Nulla iaculis eros a elit pharetra egestas. Nunc
+          placerat facilisis cursus. Sed vestibulum metus eget dolor pharetra
+          rutrum.
+        </p>
+        <footer>
+          <small
+            >Duis nec elit placerat, suscipit nibh quis, finibus neque.</small
+          >
+        </footer>
+      </article>
+    </main>
+    <footer></footer>
+    <script>
+      const inputTodoId = document.querySelector("#input-todo-id");
+      const button = document.querySelector("button");
+
+      // - when button clicked
+      // - get the todo id out of the textbox on the screen
+      // - verify that I am getting different ids that I enter them and the button
+
+      // - use the id to call the api to get a todo back
+      // - verify I got the data back
+
+      // - display one piece of data
+      // - verify it works
+      // - display another pieces of data
+      // - verify it works
+    </script>
+  </body>
+</html>
